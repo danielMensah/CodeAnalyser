@@ -21,7 +21,7 @@ export class CodeFormComponent implements OnInit {
 
     console.log(`Sending body...`);
     console.log(body);
-    this.http.post("https://httpbin.org/post",body).subscribe(data => {
+    this.http.post("http://localhost:8080/api/submitCode",body).subscribe(data => {
       console.log("Attempted to send...");
       console.log("Response....");
       console.log(data)
