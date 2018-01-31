@@ -32,14 +32,12 @@ class CodeInspectorController {
         $gluedCode  = '';
 
         foreach ($codeAsArray as $line) {
-            if ($codeIsValid) {
-                if (strpos($line, 'var') !== false) {
-                    $codeIsValid = false;
-                } else if (strpos($line, "$") !== false) {
-                    if (self::lineHasPHPSyntax($line)) {
-                        $codeIsValid = false;
-                    }
-                }
+            if (strpos($line, 'var') !== false) {
+                $codeIsValid = false;
+                break;
+            } else if (strpos($line, "$") !== false && strpos(trim($line), "$") == 0) {
+                $codeIsValid = false;
+                break;
             }
 
             $gluedCode = $gluedCode . "\n" . $line;
@@ -57,29 +55,7 @@ class CodeInspectorController {
      * @return bool
      */
     public function codeIsNotEmpty($codeAsArray) {
-
         return !!sizeof($codeAsArray);
-    }
-
-    /**
-     * @param $line
-     * @return bool
-     */
-    public function lineHasPHPSyntax($line) {
-        $codeHsPHPSyntax = false;
-        $line = explode(" ", $line);
-
-        foreach ($line as $word) {
-            if (strlen($word) > 1
-                && !preg_match('~[0-9]~', $word)
-                && !$codeHsPHPSyntax) {
-
-                $codeHsPHPSyntax = true;
-            }
-        }
-
-        return $codeHsPHPSyntax;
-
     }
 
 }

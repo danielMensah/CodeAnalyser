@@ -45,30 +45,4 @@ class CodeInspectorTest extends PHPUnit_Framework_TestCase {
         self::assertFalse($response);
     }
 
-    public function testThatCodeHasNoPHPSyntax() {
-        $lineSample = file(__DIR__ . '/Helpers/ValidJavaCode.txt', FILE_SKIP_EMPTY_LINES | FILE_IGNORE_NEW_LINES);
-        $codeHasPHPSyntax = false;
-
-        foreach ($lineSample as $line) {
-            if (strpos($line, "$") !== false && !$codeHasPHPSyntax) {
-                $codeHasPHPSyntax = $this->controller->lineHasPHPSyntax($line);
-            }
-        }
-
-        self::assertFalse($codeHasPHPSyntax);
-    }
-
-    public function testThatCodeHasPHPSyntax() {
-        $lineSample = file(__DIR__ . '/Helpers/InvalidJavaCode.txt', FILE_SKIP_EMPTY_LINES | FILE_IGNORE_NEW_LINES);
-        $codeHasPHPSyntax = false;
-
-        foreach ($lineSample as $line) {
-            if (strpos($line, "$") !== false && !$codeHasPHPSyntax) {
-                $codeHasPHPSyntax = $this->controller->lineHasPHPSyntax($line);
-            }
-        }
-
-        self::assertTrue($codeHasPHPSyntax);
-    }
-
 }
