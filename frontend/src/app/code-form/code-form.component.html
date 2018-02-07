@@ -1,4 +1,8 @@
-<form>
-  <textarea #code rows="30" cols="50" name="code" ></textarea>
-  <button (click)="sendCode(code)">Check</button> 
-</form>
+<div class="ui form">
+      <label>Code</label>
+      <textarea #code></textarea>
+</div>
+
+<div (click)="sendCode(code)" class="ui teal button">
+      <i class="add icon"></i>Submit
+</div>

@@ -4,12 +4,14 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { CodeFormComponent } from './code-form/code-form.component';
+import { CodeResultsComponent } from './code-results/code-results.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    CodeFormComponent
+    CodeFormComponent,
+    CodeResultsComponent
   ],
   imports: [
     BrowserModule,
