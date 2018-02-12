@@ -1,0 +1,43 @@
+{
+  "response": "Valid code",
+  "valid": true,
+  "type": ".java",
+  "name": "Dummy class name",
+  "NLoc": 200,
+  "variables": {
+    "total": 55
+  },
+  "comments": [
+    {
+      "type": "inline",
+      "line": 20,
+      "feedback": "This line of comment may need to have less adjectives."
+    },
+    {
+      "type": "block",
+      "line": {
+        "start": 3,
+        "end": 6
+      },
+      "feedback": "Good commenting"
+    }
+  ],
+  "functions": [
+    {
+      "name": "addUser()",
+      "parameters": 3,
+      "NLoc": 10,
+      "cyclomaticComplexity": 8,
+      "evaluation": "Good",
+      "feedback": ""
+    },
+    {
+      "name": "calculateSalary()",
+      "parameters": 0,
+      "NLoc": 34,
+      "cyclomaticComplexity": 20,
+      "evaluation": "Very bad",
+      "feedback": "This function seems to be quite long. Maybe you could split it in order to divide the jobs."
+    }
+  ]
+}

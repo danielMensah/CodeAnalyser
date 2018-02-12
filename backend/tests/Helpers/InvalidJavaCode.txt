@@ -27,6 +27,7 @@ public class FilterExample
 		}
 
 		$name = "Daniel";
+		System.out.println("$");
 
 		return result;
 	}

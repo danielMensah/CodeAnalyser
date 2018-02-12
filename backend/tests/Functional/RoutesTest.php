@@ -22,15 +22,19 @@ class RoutesTest extends BaseTestCase {
      * @runInSeparateProcess
      */
 
-    public function testThrowErrorIfCodeIsInvalid() {
-        //Unsupported characters
+    public function testThatThrowErrorIfCodeIsInvalid() {
+        $needle = "\"valid\":false";
+
+        //Empty code
         $response = $this->runApp('POST', '/api/submitCode', array("text" => ""));
-        self::assertContains('You may have pass an empty string or invalid Java code!', (string)$response->getBody());
+        self::assertEquals((int)$response->getStatusCode(), 200);
+        self::assertContains($needle, (string)$response->getBody());
 
         //Invalid code
         $invalidCode = file_get_contents(__DIR__ . "/../Helpers/InvalidJavaCode.txt");
         $response = $this->runApp('POST', '/api/submitCode', array("text" => $invalidCode));
-        self::assertContains('You may have pass an empty string or invalid Java code!', (string)$response->getBody());
+        self::assertEquals((int)$response->getStatusCode(), 200);
+        self::assertContains($needle, (string)$response->getBody());
     }
 
 }

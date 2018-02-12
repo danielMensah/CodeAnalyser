@@ -1,0 +1,18 @@
+{
+  "java": {
+    "comments": {
+      "maxLength": 20,
+      "single": "//",
+      "block": {
+        "start": "/*",
+        "end": "*/"
+      },
+      "exclude": ["@"]
+    },
+    "class": ["public class", "public interface", "public abstract class"],
+    "method": {
+      "includes": ["public ", "void ", "private ", "protected ", "friendly ", "default "],
+      "excludes": ["public class", "public interface", "public abstract class"]
+    }
+  }
+}

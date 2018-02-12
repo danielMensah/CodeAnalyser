@@ -1,0 +1,55 @@
+[
+  {
+    "type":"inline",
+    "line":1,
+    "feedback":"Hello world"
+  },
+  {
+    "type":"inline",
+    "line":2,
+    "feedback":"It seems that this comment could be merge with the previous. Try adding a block comment instead."
+  },
+  {
+    "type":"block",
+    "line":{
+      "start":9,
+      "end":13
+    },
+    "feedback":"Hello world"
+  },
+  {
+    "type":"inline",
+    "line":15,
+    "feedback":"Hello world"
+  },
+  {
+    "type":"inline",
+    "line":32,
+    "feedback":"Hello world"
+  },
+  {
+    "type":"inline",
+    "line":33,
+    "feedback":"It seems that this comment could be merge with the previous. Try adding a block comment instead."
+  },
+  {
+    "type":"inline",
+    "line":55,
+    "feedback":"Hello world"
+  },
+  {
+    "type":"inline",
+    "line":58,
+    "feedback":"Hello world"
+  },
+  {
+    "type":"inline",
+    "line":61,
+    "feedback":"Hello world"
+  },
+  {
+    "type":"inline",
+    "line":62,
+    "feedback":"It seems that this comment could be merge with the previous. Try adding a block comment instead."
+  }
+]
