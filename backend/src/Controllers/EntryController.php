@@ -7,18 +7,15 @@
  */
 require_once __DIR__ . '/CodeValidatorController.php';
 require_once __DIR__ . '/CommentController.php';
+require_once __DIR__ . '/FunctionController.php';
+require_once __DIR__ . '/CyclomaticComplexityController.php';
 require_once __DIR__ . '/../Models/ClassModel.php';
 require_once __DIR__ . '/../Models/ResponseModel.php';
 require_once __DIR__ . '/../../util/utils.php';
+require_once __DIR__ . "/../constants.php";
 
 class EntryController {
 
-    /** @var CodeValidatorController */
-    private $validator;
-    /** @var CommentController */
-    private $commentController;
-    /** @var ResponseModel */
-    private $response;
     /** @var string */
     private $language;
 
@@ -27,35 +24,43 @@ class EntryController {
      * @param string $language
      */
     public function __construct(string $language) {
-        $this->validator = new CodeValidatorController();
-        $this->commentController = new CommentController($language);
-        $this->response = new ResponseModel();
         $this->language = $language;
     }
 
     public function codeReview($codeAsArray) {
+        $validator = new CodeValidatorController();
+        $response = new ResponseModel();
 
-        if ($this->validator->validateCode($codeAsArray, $this->language)) {
-            /** @var ClassModel*/
+        if ($validator->validateCode($codeAsArray, $this->language)) {
             $classModel = new ClassModel();
 
-            $classModel->setName($this->getClassName($codeAsArray, $this->language));
-            $classModel->setComments($this->commentController->getAllComments($codeAsArray));
+            $classModel->setName($this->getClassName($codeAsArray));
+
+            $commentController = new CommentController($this->language);
+            $classModel->setComments($commentController->getAllComments($codeAsArray));
+            $commentArray = dismount($classModel)['comments'];
+
+            $functionController = new FunctionController();
+            $classModel->setFunctions($functionController->getFunctions($codeAsArray, $commentArray, $this->language));
             $classModel->setNLoc(sizeof($codeAsArray));
 
-            $this->response->setValid(true);
-            $this->response->setClass($classModel);
+            $response->setValid(true);
+            $response->setClass($classModel);
 
-            return json_encode(dismount($this->response));
+            return json_encode(dismount($response));
         }
 
-        $this->response->setResponse("Invalid code! You may have submitted an empty field or an invalid " . $this->language . " code.");
-        $this->response->setErrorLine("");
-        $this->response->setValid(false);
+        $response->setResponse("Invalid code! You may have submitted an empty field or an invalid " . $this->language . " code.");
+        $response->setErrorLine("");
+        $response->setValid(false);
 
-        return json_encode(dismount($this->response));
+        return json_encode(dismount($response));
     }
 
+    /**
+     * @param $codeAsArray
+     * @return string
+     */
     public function getClassName($codeAsArray) {
         $classType = json_decode(file_get_contents(
             __DIR__ . '/../../util/LanguageStyles.json'), true)[$this->language]['class'];

@@ -57,3 +57,62 @@ function dismount($object) {
 
     return $array;
 }
+
+function removeComments($codeAsArray, $commentArray) {
+    $newCodeAsArray = array();
+    foreach ($commentArray as $comment) {
+        if ($comment['type'] === 'inline') $codeAsArray = removeInlineComments($codeAsArray, $comment);
+        if ($comment['type'] === 'block') $codeAsArray = removeBlockComments($codeAsArray, $comment);
+    }
+
+    foreach ($codeAsArray as $line) array_push($newCodeAsArray, $line); //Doing this otherwise some indexes will be unset e.g. missing index 11
+
+    return $newCodeAsArray;
+}
+
+/**
+ * @param $codeAsArray
+ * @param $comment
+ * @return array
+ */
+function removeInlineComments($codeAsArray, $comment) {
+    $commentLine = $comment['line'] - 1;
+    $commentIsDoubleSlash =  strstr($codeAsArray[$commentLine], "//", true);
+
+    if ($commentIsDoubleSlash) {
+        $codeAsArray[$commentLine] = trim($commentIsDoubleSlash);
+    } else {
+        $codeAsArray[$commentLine] = trim(strstr($codeAsArray[$commentLine], "/*", true));
+    }
+
+    return $codeAsArray;
+}
+
+/**
+ * @param $codeAsArray
+ * @param $comment
+ * @return array
+ */
+function removeBlockComments($codeAsArray, $comment) {
+    $start = $comment['line']['start'] - 1;
+    $end = $comment['line']['end'] - 1;
+
+    while ($start <= $end) {
+        unset($codeAsArray[$start]);
+        $start++;
+    }
+
+    return $codeAsArray;
+}
+
+/**
+ * @param $string
+ * @return string
+ */
+function removeStringBetweenQuotes($string) {
+    if (preg_match('/"([^"]+)"/', $string, $m)) {
+        return str_replace($m, '', $string);
+    }
+
+    return $string;
+}

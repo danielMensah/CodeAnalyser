@@ -2,7 +2,7 @@
   {
     "type":"inline",
     "line":1,
-    "feedback":"Hello world"
+    "feedback":null
   },
   {
     "type":"inline",
@@ -15,17 +15,17 @@
       "start":9,
       "end":13
     },
-    "feedback":"Hello world"
+    "feedback":null
   },
   {
     "type":"inline",
     "line":15,
-    "feedback":"Hello world"
+    "feedback":null
   },
   {
     "type":"inline",
     "line":32,
-    "feedback":"Hello world"
+    "feedback":null
   },
   {
     "type":"inline",
@@ -35,17 +35,17 @@
   {
     "type":"inline",
     "line":55,
-    "feedback":"Hello world"
+    "feedback":null
   },
   {
     "type":"inline",
     "line":58,
-    "feedback":"Hello world"
+    "feedback":null
   },
   {
     "type":"inline",
     "line":61,
-    "feedback":"Hello world"
+    "feedback":null
   },
   {
     "type":"inline",

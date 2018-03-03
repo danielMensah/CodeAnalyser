@@ -9,6 +9,7 @@
 require_once __DIR__ . "/../../src/Controllers/EntryController.php";
 require_once __DIR__ . "/../../src/Controllers/CommentController.php";
 require_once __DIR__ . "/../../src/Controllers/CodeValidatorController.php";
+require_once __DIR__ . "/../../util/utils.php";
 
 class EntryControllerTest extends PHPUnit_Framework_TestCase {
 

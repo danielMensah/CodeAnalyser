@@ -25,7 +25,7 @@ class CommentControllerTest extends PHPUnit_Framework_TestCase {
         $sample = file(__DIR__ . '/../Helpers/ValidJavaCode.txt');
         $this->class->setComments($this->controller->getAllComments($sample));
 
-        $expectedResult = 10;
+        $expectedResult = 9;
         $actualResult = sizeof($this->class->getComments());
 
         self::assertEquals($expectedResult, $actualResult);

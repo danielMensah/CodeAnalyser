@@ -11,11 +11,14 @@ class FunctionModel {
     /** @var string*/
     private $name;
 
-    /** @var string[] */
+    /** @var int */
     private $nParameters;
 
     /** @var int*/
     private $complexity;
+
+    /** @var string */
+    private $feedback;
 
     /** @var int*/
     private $nLoc;
@@ -35,14 +38,14 @@ class FunctionModel {
     }
 
     /**
-     * @return array
+     * @return int
      */
     public function getNParameters() {
         return $this->nParameters;
     }
 
     /**
-     * @param array $nParameters
+     * @param int $nParameters
      */
     public function setNParameters($nParameters) {
         $this->nParameters = $nParameters;
@@ -74,6 +77,20 @@ class FunctionModel {
      */
     public function setNLoc($nLoc) {
         $this->nLoc = $nLoc;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFeedback(): string {
+        return $this->feedback;
+    }
+
+    /**
+     * @param string $feedback
+     */
+    public function setFeedback(string $feedback) {
+        $this->feedback = $feedback;
     }
 
 }

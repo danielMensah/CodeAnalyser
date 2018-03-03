@@ -1,15 +1,16 @@
 // Mike Scott
 // 2d array manipulation examples
 
+//import
 import java.awt.Color;
 
 
-public class FilterExample extends Class
+public class FilterExample
 {
 	/*
 	 *pre: image != null, image.length > 1, image[0].length > 1
 	 *	image is a rectangular matrix, neighberhoodSize > 0
-	 *post: return a smoothed version of image right one
+	 *post: return a smoothed version of image
 	 */
 	public Color[][] smooth(Color[][] image, int neighberhoodSize)
 	{	//check precondition
@@ -55,12 +56,12 @@ public class FilterExample extends Class
 	//helper method to determine if given coordinates are in bounds
 	private boolean inBounds(Color[][] image, int row, int col)
 	{	return (row >= 0) && (row <= image.length) && (col >= 0)
-				&& (col < image[0].length); /* another comment */
+				&& (col < image[0].length);
 	}
 
 	//private method to ensure mat is rectangular
-	private boolean rectangularMatrix( Color[][] mat ) // Just a comment
-	{	boolean isRectangular = true;
+	private boolean rectangularMatrix( Color[][] mat ) {
+		boolean isRectangular = true;
 		int row = 1;
 		final int COLUMNS = mat[0].length;
 

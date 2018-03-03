@@ -8,7 +8,7 @@
 
 require_once __DIR__ . "/CommentBlock.php";
 
-class Comment {
+class CommentModel {
 
     /** @var string*/
     private $type;

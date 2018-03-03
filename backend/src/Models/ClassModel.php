@@ -6,7 +6,8 @@
  * Time: 11:58
  */
 
-require_once __DIR__ . "/../Models/Comment.php";
+require_once __DIR__ . "/../Models/CommentModel.php";
+require_once __DIR__ . "/../Models/FunctionModel.php";
 
 class ClassModel {
 
@@ -16,8 +17,9 @@ class ClassModel {
     private $NLoc;
     /** @var array*/
     private $variables;
-    /** @var Comment[] */
+    /** @var CommentModel[] */
     private $comments;
+    /** @var  FunctionModel[] */
     private $functions;
 
     /**
@@ -63,30 +65,30 @@ class ClassModel {
     }
 
     /**
-     * @return Comment[]
+     * @return CommentModel[]
      */
     public function getComments() {
         return $this->comments;
     }
 
     /**
-     * @param Comment[] $comments
+     * @param CommentModel[] $comments
      */
     public function setComments($comments) {
         $this->comments = $comments;
     }
 
     /**
-     * @return mixed
+     * @return FunctionModel[]
      */
-    public function getFunctions() {
+    public function getFunctions(): array {
         return $this->functions;
     }
 
     /**
-     * @param mixed $functions
+     * @param FunctionModel[] $functions
      */
-    public function setFunctions($functions) {
+    public function setFunctions(array $functions) {
         $this->functions = $functions;
     }
 
