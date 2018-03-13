@@ -32,3 +32,12 @@ $app->post('/api/dummy/submitCode', function (Request $request, Response $respon
 
     return $response;
 });
+
+$app->post('/api/dummy/submitCode', function (Request $request, Response $response) {
+    $dummyData = json_decode(file_get_contents(
+        __DIR__ . '/../util/dummyData.json'), true);
+
+    $response->getBody()->write(json_encode($dummyData));
+
+    return $response;
+});

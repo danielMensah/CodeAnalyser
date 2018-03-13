@@ -1,0 +1,11 @@
+<div class="ui form">
+  <label>Code</label>
+  <textarea #editor id="editor">{{displayValue}}</textarea>
+  <input #file (change)="readFile(file)" type="file">
+</div>
+
+<div class="ui centre">
+  <div (click)="submitCode(editor)" class="ui teal button">
+        <i class="add icon"></i>Submit
+  </div>
+</div>

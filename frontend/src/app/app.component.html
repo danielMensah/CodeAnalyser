@@ -8,10 +8,10 @@
 <div class="ui container">
     <div class="ui two column grid">
         <div class="column">
-            <app-code-form></app-code-form>
+            <app-code-manager (onStatsReceived)="setStats($event)"></app-code-manager>
         </div>
         <div class="column">
-            <app-code-results></app-code-results>
+            <app-code-results [stats]="stats"></app-code-results>
         </div>
     </div>
 </div>

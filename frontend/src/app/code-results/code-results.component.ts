@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+
+import { Statistics } from '../statistics.model';
 
 @Component({
   selector: 'app-code-results',
@@ -6,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./code-results.component.css']
 })
 export class CodeResultsComponent implements OnInit {
+
+  @Input() stats: Statistics;
 
   constructor() { }
 

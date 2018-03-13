@@ -57,6 +57,36 @@ function dismount($object) {
 
     return $array;
 }
+/**
+ * @param $object
+ * @return array
+ */
+function dismount($object) {
+    $reflectionClass = new ReflectionClass(get_class($object));
+    $array = array();
+
+    foreach ($reflectionClass->getProperties() as $property) {
+        $property->setAccessible(true);
+
+        if (is_object($property->getValue($object))) {
+            $array[$property->getName()] = dismount($property->getValue($object));
+        } else if (is_array($property->getValue($object))) {
+            $bArray = array();
+            foreach ($property->getValue($object) as $item) {
+                 is_object($item) ? array_push($bArray, dismount($item)) : array_push($bArray, $item);
+            }
+
+            $array[$property->getName()] = $bArray;
+
+        } else  {
+            $array[$property->getName()] = $property->getValue($object);
+            $property->setAccessible(false);
+        }
+
+    }
+
+    return $array;
+}
 
 function removeComments($codeAsArray, $commentArray) {
     $newCodeAsArray = array();

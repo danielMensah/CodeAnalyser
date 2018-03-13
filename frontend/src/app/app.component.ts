@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { Statistics } from './statistics.model';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,4 +9,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+
+  stats: Statistics;
+
+  constructor() {
+    this.stats = new Statistics();
+   }
+
+  setStats(respondsStats: Statistics): void {
+    this.stats = respondsStats;
+  }
 }
