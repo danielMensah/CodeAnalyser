@@ -1,0 +1,83 @@
+[
+  {
+    "type":"inline",
+    "line":1,
+    "fogIndex":1,
+    "feedback":"Comment is at a Eight Grade level. Very easy to read."
+  },
+  {
+    "type":"inline",
+    "line":2,
+    "fogIndex":19,
+    "feedback":"It seems that this comment could be merge with the previous. Try adding a block comment instead. Comment is at a Graduate level. You may want to simplify it by using less complex words."
+  },
+  {
+    "type":"block",
+    "line":{
+      "start":6,
+      "end":19
+    },
+    "fogIndex":0,
+    "feedback":" Comment is at a Eight Grade level. Very easy to read."
+  },
+  {
+    "type":"block",
+    "line":{
+      "start":23,
+      "end":27
+    },
+    "fogIndex":0,
+    "feedback":" Comment is at a Eight Grade level. Very easy to read."
+  },
+  {
+    "type":"inline",
+    "line":29,
+    "fogIndex":15,
+    "feedback":"Comment is at a Graduate level. You may want to simplify it by using less complex words."
+  },
+  {
+    "type":"inline",
+    "line":46,
+    "fogIndex":16,
+    "feedback":"Comment is at a Graduate level. You may want to simplify it by using less complex words."
+  },
+  {
+    "type":"inline",
+    "line":47,
+    "fogIndex":12,
+    "feedback":"It seems that this comment could be merge with the previous. Try adding a block comment instead. Comment is at a High School level. The level of readability is good, not too simple, not too complex."
+  },
+  {
+    "type":"inline",
+    "line":69,
+    "fogIndex":12,
+    "feedback":"Comment is at a High School level. The level of readability is good, not too simple, not too complex."
+  },
+  {
+    "type":"inline",
+    "line":72,
+    "fogIndex":7,
+    "feedback":"Comment is at a Eight Grade level. Very easy to read."
+  },
+  {
+    "type":"inline",
+    "line":75,
+    "fogIndex":9,
+    "feedback":"Comment is at a High School level. The level of readability is good, not too simple, not too complex."
+  },
+  {
+    "type":"inline",
+    "line":76,
+    "fogIndex":8,
+    "feedback":"It seems that this comment could be merge with the previous. Try adding a block comment instead. Comment is at a Eight Grade level. Very easy to read."
+  },
+  {
+    "type":"block",
+    "line":{
+      "start":89,
+      "end":109
+    },
+    "fogIndex":0,
+    "feedback":"This line of comment is quite long. You may want to amend the comment or refactor the function. Remember code should speak for it self! Comment is at a Eight Grade level. Very easy to read."
+  }
+]

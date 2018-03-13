@@ -6,16 +6,22 @@ use Slim\Http\Response;
 header('Access-Control-Allow-Origin: *');
 
 require_once __DIR__ . '/../src/Controllers/EntryController.php';
+require_once __DIR__ . '/../src/Models/ResponseModel.php';
 
 // Routes
 
-$app->get('/', function (Request $request, Response $response) {
-    $response->getBody()->write("Team Gamma!");
-
-    return $this->renderer->render($response, 'index.phtml');
-});
-
 $app->post('/api/submitCode', function (Request $request, Response $response) {
+    if (!strlen(trim($request->getParsedBody()['text']))) {
+        $responseModel = new ResponseModel();
+
+        $responseModel->setResponse("Invalid code! You may have submitted an empty field or an invalid Java code.");
+        $responseModel->setErrorLine("");
+        $responseModel->setValid(false);
+        $response->getBody()->write(json_encode(dismount($responseModel)));
+
+        return $response;
+    }
+
     $codeAsArray = explode("\n", $request->getParsedBody()['text']);
 
     $controller = new EntryController('java');
@@ -24,11 +30,11 @@ $app->post('/api/submitCode', function (Request $request, Response $response) {
     return $response;
 });
 
-$app->post('/api/dummy/submitCode', function (Request $request, Response $response) {
-    $dummyData = json_decode(file_get_contents(
-        __DIR__ . '/../util/dummyData.json'), true);
-
-    $response->getBody()->write(json_encode($dummyData));
-
-    return $response;
-});
+//$app->post('/api/dummy/submitCode', function (Request $request, Response $response) {
+//    $dummyData = json_decode(file_get_contents(
+//        __DIR__ . '/../util/dummyData.json'), true);
+//
+//    $response->getBody()->write(json_encode($dummyData));
+//
+//    return $response;
+//});

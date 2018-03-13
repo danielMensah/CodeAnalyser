@@ -35,16 +35,14 @@ class CyclomaticComplexityController {
         for ($i = 0; $i<sizeof($methodAsArray); $i++) {
             $line = removeStringBetweenQuotes($methodAsArray[$i]);
             if (returnFoundKeyword($line, $keywords, $keyword)) {
-                if ($lastKeyword === 'case' && $keyword === ':') {
-                    $lastKeyword = $keyword;
-                } else if ($doWhile && $keyword === 'while') {
+                if ($doWhile && $keyword === 'while') {
                     $lastKeyword = self::lastStm($line, $lastKeyword);
                 } else {
                     $cyclomaticComplexity += self::keywordsCount($line);
                     $lastKeyword = self::lastStm($line, $lastKeyword);
                 }
 
-                $doWhile = $keyword === 'do';
+                $doWhile += $keyword === 'do' ? 1 : 0;
                 $keyword = null;
             }
         }

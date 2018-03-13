@@ -29,10 +29,18 @@ class RoutesTest extends BaseTestCase {
         $response = $this->runApp('POST', '/api/submitCode', array("text" => ""));
         self::assertEquals(200, (int)$response->getStatusCode());
         self::assertContains($needle, (string)$response->getBody());
+    }
 
-        //Invalid code
-        $invalidCode = file_get_contents(__DIR__ . "/../Helpers/InvalidJavaCode.java");
-        $response = $this->runApp('POST', '/api/submitCode', array("text" => $invalidCode));
+    /**
+     * @runInSeparateProcess
+     */
+
+    public function testThatValidCodeDoesntThrowError() {
+        $sample = file(__DIR__ . '/../Helpers/ValidJavaCode.java');
+        $needle = "\"valid\":true";
+
+        //Empty code
+        $response = $this->runApp('POST', '/api/submitCode', array("text" => json_encode($sample)));
         self::assertEquals(200, (int)$response->getStatusCode());
         self::assertContains($needle, (string)$response->getBody());
     }

@@ -15,7 +15,20 @@
 		do {
             System.out.println("Count is: " + count);
             count++;
+
+            do {
+                        System.out.println("Count is: " + count);
+                        count++;
+                    } while (count < 11);
+
         } while (count < 11);
+
+        switch(test) {
+            case 2:
+            meack = 2;
+            case 3:
+            zon = 3;
+        }
 
 		return result;
 	}

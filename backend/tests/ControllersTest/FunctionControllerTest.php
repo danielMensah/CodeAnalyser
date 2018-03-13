@@ -39,7 +39,7 @@ class FunctionControllerTest extends PHPUnit_Framework_TestCase {
     public function testThatCanGetNLocFunctionAndMethodContent() {
         $sample = file(__DIR__ . '/../Helpers/FunctionJavaCodeWithInlineComments.java');
 
-        $expectedResult = 21;
+        $expectedResult = 34;
         $actualResult = sizeof($this->controller->getFunctionContent(0, $sample, 'public'));
 
         self::assertEquals($expectedResult, $actualResult);

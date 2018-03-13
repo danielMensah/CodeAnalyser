@@ -23,7 +23,7 @@ class CodeValidatorControllerTest extends PHPUnit_Framework_TestCase {
     public function testThatCodeIsValid() {
         $sample = file(__DIR__ . '/../Helpers/ValidJavaCode.java', FILE_SKIP_EMPTY_LINES | FILE_IGNORE_NEW_LINES);
 
-        $response = $this->controller->validateCode($sample, 'java');
+        $response = $this->controller->validateCode($sample);
 
         self::assertTrue($response);
     }
@@ -31,14 +31,14 @@ class CodeValidatorControllerTest extends PHPUnit_Framework_TestCase {
     public function testThatCodeIsInvalid() {
         $sample = file(__DIR__ . '/../Helpers/InvalidJavaCode.java', FILE_SKIP_EMPTY_LINES | FILE_IGNORE_NEW_LINES);
 
-        $response = $this->controller->validateCode($sample, 'java');
+        $response = $this->controller->validateCode($sample);
 
         self::assertFalse($response);
     }
 
     public function testThatCodeIsEmpty() {
 
-        $response = $this->controller->validateCode(" ", 'java');
+        $response = $this->controller->validateCode(array());
 
         self::assertFalse($response);
     }

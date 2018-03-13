@@ -31,7 +31,7 @@ class CyclomaticComplexityControllerTest extends PHPUnit_Framework_TestCase {
         $this->model->setComments($this->commentController->getAllComments($sample));
         $commentArray = dismount($this->model)['comments']; // needed to remove comments
 
-        $expectedResult = 9;
+        $expectedResult = 12;
         $actualResult = $this->controller->calculateCyclomaticComplexity($sample, $commentArray);
 
         self::assertEquals($expectedResult, $actualResult);

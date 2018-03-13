@@ -14,6 +14,8 @@ class CommentModel {
     private $type;
     /** @var string|CommentBlock */
     private $line;
+    /** @var float */
+    private $fogIndex;
     /** @var string */
     private $feedback;
 
@@ -59,6 +61,18 @@ class CommentModel {
         $this->feedback = $feedback;
     }
 
+    /**
+     * @return float
+     */
+    public function getFogIndex(): float {
+        return $this->fogIndex;
+    }
 
+    /**
+     * @param float $fogIndex
+     */
+    public function setFogIndex(float $fogIndex) {
+        $this->fogIndex = $fogIndex;
+    }
 
 }

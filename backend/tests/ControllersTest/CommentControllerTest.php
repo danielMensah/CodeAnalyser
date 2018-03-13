@@ -31,23 +31,11 @@ class CommentControllerTest extends PHPUnit_Framework_TestCase {
         self::assertEquals($expectedResult, $actualResult);
     }
 
-    public function testThatCanReviewInlineComments() {
-        $sample = file(__DIR__ . '/../Helpers/ValidJavaCodeInlineComment.java');
-        $this->class->setComments($this->controller->getAllComments($sample));
-
-        $jsonResponse = file_get_contents(__DIR__ . '/../Helpers/InlineCommentResponse.json');
-
-        $expectedResult = trim(preg_replace('/\s\s+/', '', $jsonResponse));
-        $actualResult = json_encode(dismount($this->class)['comments']);
-
-        self::assertEquals($expectedResult, $actualResult);
-    }
-
-    public function testThatCanReviewBlockComments() {
+    public function testThatCanReviewComments() {
         $sample = file(__DIR__ . '/../Helpers/ValidJavaCodeBlockComment.java');
         $this->class->setComments($this->controller->getAllComments($sample));
 
-        $jsonResponse = file_get_contents(__DIR__ . '/../Helpers/BlockCommentResponse.json');
+        $jsonResponse = file_get_contents(__DIR__ . '/../Helpers/CommentResponse.json');
 
         $expectedResult = trim(preg_replace('/\s\s+/', '', $jsonResponse));
         $actualResult = json_encode(dismount($this->class)['comments']);

@@ -31,7 +31,7 @@ class EntryController {
         $validator = new CodeValidatorController();
         $response = new ResponseModel();
 
-        if ($validator->validateCode($codeAsArray, $this->language)) {
+        if ($validator->validateCode($codeAsArray)) {
             $classModel = new ClassModel();
 
             $commentController = new CommentController($this->language);

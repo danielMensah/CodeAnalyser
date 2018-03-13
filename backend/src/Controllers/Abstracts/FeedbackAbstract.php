@@ -8,6 +8,6 @@
 
 abstract class FeedbackAbstract {
 
-    abstract protected function getFeedback($stud, $type = null);
+    abstract protected function getBlockCommentFeedback($stud, $type = null);
 
 }

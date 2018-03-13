@@ -61,7 +61,7 @@ class FunctionController extends FeedbackAbstract {
         $model->setName(self::getFunctionName($line));
         $model->setNLoc(sizeof($functionContent));
         $model->setComplexity($cc->calculateCyclomaticComplexity($functionContent));
-        $model->setFeedback(self::getFeedback($model->getComplexity()));
+        $model->setFeedback(self::getBlockCommentFeedback($model->getComplexity()));
 
         return $model;
     }
@@ -134,7 +134,7 @@ class FunctionController extends FeedbackAbstract {
      * @param null $type
      * @return string
      */
-    protected function getFeedback($cc, $type = null) {
+    protected function getBlockCommentFeedback($cc, $type = null) {
         if ($cc > 50) return FUNCTION_FEEDBACK_ABOVE_50;
         if ($cc > 20 && $cc < 50) return FUNCTION_FEEDBACK_ABOVE_20;
         return "";
