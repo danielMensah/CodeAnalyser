@@ -27,13 +27,13 @@ class RoutesTest extends BaseTestCase {
 
         //Empty code
         $response = $this->runApp('POST', '/api/submitCode', array("text" => ""));
-        self::assertEquals((int)$response->getStatusCode(), 200);
+        self::assertEquals(200, (int)$response->getStatusCode());
         self::assertContains($needle, (string)$response->getBody());
 
         //Invalid code
         $invalidCode = file_get_contents(__DIR__ . "/../Helpers/InvalidJavaCode.java");
         $response = $this->runApp('POST', '/api/submitCode', array("text" => $invalidCode));
-        self::assertEquals((int)$response->getStatusCode(), 200);
+        self::assertEquals(200, (int)$response->getStatusCode());
         self::assertContains($needle, (string)$response->getBody());
     }
 
