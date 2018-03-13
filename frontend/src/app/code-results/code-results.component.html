@@ -1,39 +1,56 @@
 <label>Results</label>
+<h3>General</h3>
 <table class="ui celled structured table">
-    <thead>
-      <tr>
-        <th rowspan="2">Catagory</th>
-        <th rowspan="2">Variable</th>
-        <th rowspan="2">Value</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td rowspan="3">General</td>
-        <td>Type</td>
-        <td class="right aligned">{{stats.type}}</td>
-      </tr>
-      <tr>
-        <td>Class Name</td>
-        <td class="right aligned">{{stats.name}}</td>
-      </tr>
-      <tr>
-        <td>Number of Lines</td>
-        <td class="right aligned">{{stats.NLoc}}</td>
-      </tr>
-      <tr>
-        <td rowspan="2">Comments</td>
-        <td>Number</td>
-        <td class="right aligned"></td>
-      </tr>
-      <tr>
-        <td>Quality</td>
-        <td class="right aligned"></td>
-      </tr>
-      <tr>
-        <td>Functions</td>
-        <td>Number</td>
-        <td class="right aligned"></td>
-      </tr>
-    </tbody>
-  </table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Valid</th>
+      <th>Number of lines</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{stats.class.name}}</td>
+      <td>{{stats.valid}}</td>
+      <td>{{stats.class.NLoc}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Comments</h3>
+<table class="ui celled structured table">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Line</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let comment of stats.class.comments">
+      <td>{{comment.type}}</td>
+      <td>{{comment.line}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Functions</h3>
+<table class="ui celled structured table">
+  <thead>
+    <tr>
+      <th>name</th>
+      <th>Number of parameters</th>
+      <th>Number of lines</th>
+      <th>Cyclomatic Score</th>
+      <th>Feedback</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let function of stats.class.functions">
+      <td>{{function.name}}</td>
+      <td>{{function.nParameters}}</td>
+      <td>{{function.nLoc}}</td>
+      <td>{{function.complexity}}</td>
+      <td>{{function.feedback}}</td>
+    </tr>
+  </tbody>
+</table>

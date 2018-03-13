@@ -42,7 +42,8 @@ export class CodeManagerComponent implements OnInit {
     return false;
   }
 
-  sendCode(code: string): boolean {
+  sendCode(code: HTMLInputElement): boolean {
+
     if (!code) {
       swal('Empty Code', 'You must enter some text to be scanned', 'error');
       return false;
@@ -54,6 +55,7 @@ export class CodeManagerComponent implements OnInit {
     this.http.post<Statistics>('http://localhost:8080/api/submitCode', body).subscribe(data => {
       console.log(data);
 
+
       const obj = {
         title: 'Submitting...',
         timer: 2000,
@@ -63,7 +65,12 @@ export class CodeManagerComponent implements OnInit {
       };
 
       swal(obj).then((result) => {
-        this.onStatsReceived.emit(data);
+        if(data.valid) {
+          this.onStatsReceived.emit(data);
+        } else {
+          swal('Invalid Code', 'Not recognised as valid Java code', 'error');
+        }
+        
       });
 
       return false;

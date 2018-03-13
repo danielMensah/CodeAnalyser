@@ -18,5 +18,6 @@ export class AppComponent {
 
   setStats(respondsStats: Statistics): void {
     this.stats = respondsStats;
+    console.log(respondsStats.class);
   }
 }
