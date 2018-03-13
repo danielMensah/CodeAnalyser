@@ -24,10 +24,11 @@ class FunctionControllerTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testThatCanGetFunctions() {
-        $sample = file(__DIR__ . '/../Helpers/ValidJavaCode.txt');
+        $sample = file(__DIR__ . '/../Helpers/ValidJavaCode.java');
         $this->model->setComments($this->commentController->getAllComments($sample));
-        $commentArray = dismount($this->model)['comments'];
-        $this->model->setFunctions($this->controller->getFunctions($sample, $commentArray, 'java'));
+        $dismountedClass = dismount($this->model);
+        $this->model->setFunctions($this->controller->getFunctions($sample,
+            $dismountedClass['comments'], 'java', $dismountedClass['name']));
 
         $expectedResult = 4;
         $actualResult =sizeof($this->model->getFunctions());
@@ -36,9 +37,9 @@ class FunctionControllerTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testThatCanGetNLocFunctionAndMethodContent() {
-        $sample = file(__DIR__ . '/../Helpers/FunctionJavaCodeWithInlineComments.txt');
+        $sample = file(__DIR__ . '/../Helpers/FunctionJavaCodeWithInlineComments.java');
 
-        $expectedResult = 16;
+        $expectedResult = 21;
         $actualResult = sizeof($this->controller->getFunctionContent(0, $sample, 'public'));
 
         self::assertEquals($expectedResult, $actualResult);

@@ -89,13 +89,17 @@ function dismount($object) {
 }
 
 function removeComments($codeAsArray, $commentArray) {
+    if (!$commentArray) return $codeAsArray;
+    
     $newCodeAsArray = array();
+
     foreach ($commentArray as $comment) {
         if ($comment['type'] === 'inline') $codeAsArray = removeInlineComments($codeAsArray, $comment);
         if ($comment['type'] === 'block') $codeAsArray = removeBlockComments($codeAsArray, $comment);
     }
 
-    foreach ($codeAsArray as $line) array_push($newCodeAsArray, $line); //Doing this otherwise some indexes will be unset e.g. missing index 11
+    //Doing this otherwise some indexes will be unset e.g. missing index 11
+    foreach ($codeAsArray as $line) array_push($newCodeAsArray, $line);
 
     return $newCodeAsArray;
 }
@@ -145,4 +149,21 @@ function removeStringBetweenQuotes($string) {
     }
 
     return $string;
+}
+
+/**
+ * @param $line
+ * @param $keywords
+ * @param null|string $match
+ * @return null
+ */
+function returnFoundKeyword($line, $keywords, string &$match = null) {
+    foreach ($keywords as $keyword) {
+        if (contains($line, $keyword)) {
+            $match = $keyword;
+            break;
+        };
+    }
+
+    return $match;
 }

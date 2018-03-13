@@ -9,6 +9,7 @@
 require_once __DIR__ . "/../../src/Controllers/CyclomaticComplexityController.php";
 require_once __DIR__ . "/../../src/Controllers/CommentController.php";
 require_once __DIR__ . "/../../src/Models/ClassModel.php";
+require_once __DIR__ . "/../../util/utils.php";
 
 class CyclomaticComplexityControllerTest extends PHPUnit_Framework_TestCase {
 
@@ -26,7 +27,18 @@ class CyclomaticComplexityControllerTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testThatCanGetNumberOfKeywordsEscapingInlineComments() {
-        $sample = file(__DIR__ . '/../Helpers/FunctionJavaCodeWithInlineComments.txt', FILE_SKIP_EMPTY_LINES | FILE_IGNORE_NEW_LINES);
+        $sample = file(__DIR__ . '/../Helpers/FunctionJavaCodeWithInlineComments.java', FILE_SKIP_EMPTY_LINES | FILE_IGNORE_NEW_LINES);
+        $this->model->setComments($this->commentController->getAllComments($sample));
+        $commentArray = dismount($this->model)['comments']; // needed to remove comments
+
+        $expectedResult = 9;
+        $actualResult = $this->controller->calculateCyclomaticComplexity($sample, $commentArray);
+
+        self::assertEquals($expectedResult, $actualResult);
+    }
+
+    public function testThatCanGetCyclomaticComplexityEscapingBlockComments() {
+        $sample = file(__DIR__ . '/../Helpers/FunctionJavaCodeWithBlockComments.java', FILE_SKIP_EMPTY_LINES | FILE_IGNORE_NEW_LINES);
         $this->model->setComments($this->commentController->getAllComments($sample));
         $commentArray = dismount($this->model)['comments']; // needed to remove comments
 
@@ -36,13 +48,11 @@ class CyclomaticComplexityControllerTest extends PHPUnit_Framework_TestCase {
         self::assertEquals($expectedResult, $actualResult);
     }
 
-    public function testThatCanGetCyclomaticComplexityEscapingBlockComments() {
-        $sample = file(__DIR__ . '/../Helpers/FunctionJavaCodeWithBlockComments.txt', FILE_SKIP_EMPTY_LINES | FILE_IGNORE_NEW_LINES);
-        $this->model->setComments($this->commentController->getAllComments($sample));
-        $commentArray = dismount($this->model)['comments']; // needed to remove comments
+    public function testThatCanGetKeywordsCount() {
+        $line = ': "Violation of precondition: smooth";';
 
-        $expectedResult = 8;
-        $actualResult = $this->controller->calculateCyclomaticComplexity($sample, $commentArray);
+        $expectedResult = 1;
+        $actualResult = $this->controller->keywordsCount(removeStringBetweenQuotes($line));
 
         self::assertEquals($expectedResult, $actualResult);
     }

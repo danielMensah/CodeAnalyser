@@ -17,27 +17,21 @@ class CodeValidatorController {
     public function validateCode($codeAsArray, $language) {
         $codeIsValid = true;
         $gluedCode  = '';
-        $counter = 0;
 
         $classType = json_decode(file_get_contents(
             __DIR__ . '/../../util/LanguageStyles.json'), true)[$language]['class'];
 
         if (self::codeIsNotEmpty($codeAsArray)) {
             foreach ($codeAsArray as $line) {
-                if (strpos($line, 'var ') !== false
-                    || (strpos($line, "$") !== false && strpos(trim($line), "$") == 0)) {
-
+                if (self::checkIfLineContainsNonJavaSyntax($line)) {
                     $codeIsValid = false;
                     break;
                 }
 
                 $gluedCode = $gluedCode . "\n" . $line;
-                $counter++;
             }
 
-            if (!arr_contains($gluedCode, $classType)) {
-                $codeIsValid = false;
-            }
+            if (!arr_contains($gluedCode, $classType)) $codeIsValid = false;
 
         } else {
             return false;
@@ -52,6 +46,14 @@ class CodeValidatorController {
      */
     private function codeIsNotEmpty($codeAsArray) {
         return gettype($codeAsArray) === "string" ? !!strlen(trim($codeAsArray)) : !!sizeof($codeAsArray);
+    }
+
+    /**
+     * @param $line
+     * @return bool
+     */
+    private function checkIfLineContainsNonJavaSyntax($line) {
+        return contains($line, 'var') || (contains($line, '$') && strpos(trim($line), '$') == 0);
     }
 
 }

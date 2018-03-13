@@ -9,12 +9,12 @@
       },
       "exclude": ["@"]
     },
-    "class": ["final public class", "public class", "public interface", "public abstract class", "private class"],
+    "class": ["final public class", "public class", "public interface", "public abstract class", "private class", "class"],
     "method": {
       "patterns": ["public", "void", "private", "protected", "default", "synchronized"],
-      "avoid": ["final public class", "public class", "public interface", "public abstract class", "private class", ";"]
+      "avoid": ["final public class", "public class", "public interface", "public abstract class", "private class", "class", ";"]
     },
-    "keywords": ["return", "if", "else", "case", "default", "for", "while", "do", "break", "continue", "&&", "||", "?", ":", "catch", "finally", "throw", "throws"],
+    "keywords": ["return", "if", "else", "case", "default", "for", "while", "do", "break", "continue", "&&", "||", "?", ":", "catch"],
     "avoidKeys": ["&&", "||", "?", ":"]
   }
 }

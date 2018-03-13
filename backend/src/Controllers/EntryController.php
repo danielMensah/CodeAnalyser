@@ -34,14 +34,15 @@ class EntryController {
         if ($validator->validateCode($codeAsArray, $this->language)) {
             $classModel = new ClassModel();
 
-            $classModel->setName($this->getClassName($codeAsArray));
-
             $commentController = new CommentController($this->language);
             $classModel->setComments($commentController->getAllComments($codeAsArray));
             $commentArray = dismount($classModel)['comments'];
 
+            $className = self::getClassName(removeComments($codeAsArray, $commentArray));
+            $classModel->setName($className);
+
             $functionController = new FunctionController();
-            $classModel->setFunctions($functionController->getFunctions($codeAsArray, $commentArray, $this->language));
+            $classModel->setFunctions($functionController->getFunctions($codeAsArray, $commentArray, $this->language, $className));
             $classModel->setNLoc(sizeof($codeAsArray));
 
             $response->setValid(true);
@@ -62,20 +63,15 @@ class EntryController {
      * @return string
      */
     public function getClassName($codeAsArray) {
-        $classType = json_decode(file_get_contents(
+        $classKeywords = json_decode(file_get_contents(
             __DIR__ . '/../../util/LanguageStyles.json'), true)[$this->language]['class'];
 
         $name = "";
 
         foreach ($codeAsArray as $line) {
-            if (arr_contains($line, $classType)) {
-                foreach ($classType as $type) {
-                    if (contains($line, $type)) {
-                        $line2 = trim(substr($line, strrpos($line, $type) + strlen($type)));
-                        $name = explode(" ", $line2)[0];
-                        break;
-                    }
-                }
+            if (returnFoundKeyword($line, $classKeywords, $match)) {
+                $line2 = trim(substr($line, strrpos($line, $match) + strlen($match)));
+                $name = explode(" ", $line2)[0];
                 break;
             }
         }

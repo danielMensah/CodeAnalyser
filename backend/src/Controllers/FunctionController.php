@@ -18,15 +18,17 @@ class FunctionController extends FeedbackAbstract {
      * @param $codeAsArray
      * @param $commentArray
      * @param $language
+     * @param $className
      * @return array
      */
-    public function getFunctions($codeAsArray, $commentArray, $language) {
+    public function getFunctions($codeAsArray, $commentArray, $language, $className) {
         $this->language = $language;
 
         $rulesFile = json_decode(file_get_contents(
             __DIR__ . '/../../util/LanguageStyles.json'), true)[$language];
 
         $patterns = $rulesFile['method']['patterns'];
+        array_push($patterns, $className);
         $avoid = $rulesFile['method']['avoid'];
 
         $functionList = array();
@@ -34,7 +36,7 @@ class FunctionController extends FeedbackAbstract {
 
         for ($i = 0; $i<sizeof($codeAsArray); $i++) {
             $line = removeStringBetweenQuotes($codeAsArray[$i]);
-            $foundK = self::returnFoundKeyword($line, $patterns);
+            $foundK = returnFoundKeyword($line, $patterns);
             if ($foundK && !arr_contains($line, $avoid)) {
                 if (self::checkOpenCurlyBracket($line, $codeAsArray[$i+1])) {
                     $functionContent = self::getFunctionContent($i, $codeAsArray, $foundK);
@@ -62,19 +64,6 @@ class FunctionController extends FeedbackAbstract {
         $model->setFeedback(self::getFeedback($model->getComplexity()));
 
         return $model;
-    }
-
-    /**
-     * @param $line
-     * @param $pattern
-     * @return null
-     */
-    private function returnFoundKeyword($line, $pattern) {
-        foreach ($pattern as $keyword) {
-            if (contains($line, $keyword)) return $keyword;
-        }
-
-        return null;
     }
 
     /**

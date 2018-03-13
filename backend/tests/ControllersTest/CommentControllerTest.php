@@ -22,7 +22,7 @@ class CommentControllerTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testThatCanGetComments() {
-        $sample = file(__DIR__ . '/../Helpers/ValidJavaCode.txt');
+        $sample = file(__DIR__ . '/../Helpers/ValidJavaCode.java');
         $this->class->setComments($this->controller->getAllComments($sample));
 
         $expectedResult = 9;
@@ -32,7 +32,7 @@ class CommentControllerTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testThatCanReviewInlineComments() {
-        $sample = file(__DIR__ . '/../Helpers/ValidJavaCodeInlineComment.txt');
+        $sample = file(__DIR__ . '/../Helpers/ValidJavaCodeInlineComment.java');
         $this->class->setComments($this->controller->getAllComments($sample));
 
         $jsonResponse = file_get_contents(__DIR__ . '/../Helpers/InlineCommentResponse.json');
@@ -44,7 +44,7 @@ class CommentControllerTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testThatCanReviewBlockComments() {
-        $sample = file(__DIR__ . '/../Helpers/ValidJavaCodeBlockComment.txt');
+        $sample = file(__DIR__ . '/../Helpers/ValidJavaCodeBlockComment.java');
         $this->class->setComments($this->controller->getAllComments($sample));
 
         $jsonResponse = file_get_contents(__DIR__ . '/../Helpers/BlockCommentResponse.json');

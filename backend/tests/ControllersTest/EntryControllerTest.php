@@ -7,50 +7,49 @@
  */
 
 require_once __DIR__ . "/../../src/Controllers/EntryController.php";
-require_once __DIR__ . "/../../src/Controllers/CommentController.php";
-require_once __DIR__ . "/../../src/Controllers/CodeValidatorController.php";
 require_once __DIR__ . "/../../util/utils.php";
 
 class EntryControllerTest extends PHPUnit_Framework_TestCase {
 
     /** @var EntryController */
     private $controller;
-    /** @var CommentController */
-    private $commentController;
-    /** @var CodeValidatorController */
-    private $validatorController;
 
     protected function setUp() {
         $this->controller = new EntryController('java');
-        $this->commentController = new CommentController('java');
-        $this->validatorController = new CodeValidatorController();
     }
 
     public function testThatCodeCanBeReviewed() {
-        $sample = file(__DIR__ . '/../Helpers/ValidJavaCode.txt');
+        $sample = file(__DIR__ . '/../Helpers/ValidJavaCode.java');
 
         $needle = "\"valid\":true";
-
         $result = $this->controller->codeReview($sample);
 
         self::assertContains($needle, $result);
     }
 
     public function testThatCodeCannotBeReviewed() {
-        $sample = file(__DIR__ . '/../Helpers/InvalidJavaCode.txt');
+        $sample = file(__DIR__ . '/../Helpers/InvalidJavaCode.java');
 
         $needle = "\"valid\":false";
-
         $result = $this->controller->codeReview($sample);
 
         self::assertContains($needle, $result);
     }
 
     public function testThatCanGetClassName() {
-        $sample = file(__DIR__ . '/../Helpers/ValidJavaCode.txt');
+        $sample = file(__DIR__ . '/../Helpers/ValidJavaCode.java');
 
-        $actualResult = "FilterExample";
-        $expectedResult = $this->controller->getClassName($sample);
+        $expectedResult = "FilterExample";
+        $actualResult = $this->controller->getClassName($sample);
+
+        self::assertEquals($expectedResult, $actualResult);
+    }
+
+    public function testThatCannotGetClassName() {
+        $sample = file(__DIR__ . '/../Helpers/ValidJavaCodeWithoutClassName.java');
+
+        $expectedResult = "";
+        $actualResult = $this->controller->getClassName($sample);
 
         self::assertEquals($expectedResult, $actualResult);
     }

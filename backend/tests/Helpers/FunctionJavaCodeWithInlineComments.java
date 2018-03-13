@@ -12,5 +12,10 @@
 			}
 		}
 
+		do {
+            System.out.println("Count is: " + count);
+            count++;
+        } while (count < 11);
+
 		return result;
 	}

@@ -27,25 +27,52 @@ class CyclomaticComplexityController {
     public function calculateCyclomaticComplexity($methodAsArray, $commentArray = null) {
         $cyclomaticComplexity = 1;
         $keywords = $this->rulesFile['keywords'];
+        $doWhile = false;
 
-        $methodAsArray = $commentArray ? removeComments($methodAsArray, $commentArray) : $methodAsArray;
+        $methodAsArray = removeComments($methodAsArray, $commentArray);
         $lastKeyword = "";
 
         for ($i = 0; $i<sizeof($methodAsArray); $i++) {
             $line = removeStringBetweenQuotes($methodAsArray[$i]);
-            foreach ($keywords as $keyword) {
-                if (contains($line, $keyword)) {
-                    $cyclomaticComplexity += substr_count($line, $keyword);
-                    $lastKeyword =  self::lastStm($line, $lastKeyword);
+            if (returnFoundKeyword($line, $keywords, $keyword)) {
+                if ($lastKeyword === 'case' && $keyword === ':') {
+                    $lastKeyword = $keyword;
+                } else if ($doWhile && $keyword === 'while') {
+                    $lastKeyword = self::lastStm($line, $lastKeyword);
+                } else {
+                    $cyclomaticComplexity += self::keywordsCount($line);
+                    $lastKeyword = self::lastStm($line, $lastKeyword);
                 }
+
+                $doWhile = $keyword === 'do';
+                $keyword = null;
             }
         }
 
-        if (contains($lastKeyword, 'return')) $cyclomaticComplexity--;
+        if ($lastKeyword === 'return') $cyclomaticComplexity--;
 
         return $cyclomaticComplexity;
     }
 
+    /**
+     * @param $line
+     * @return int
+     */
+    public function keywordsCount($line) {
+        $counter = 0;
+        $keywords = $this->rulesFile['keywords'];
+
+        if (contains($line, 'case') && contains($line, ':')) return 1;
+        foreach ($keywords as $keyword) $counter += substr_count($line, $keyword);
+
+        return $counter;
+    }
+
+    /**
+     * @param $line
+     * @param $lastKeyword
+     * @return mixed
+     */
     public function lastStm($line, $lastKeyword) {
         $avoid = $this->rulesFile['avoidKeys'];
         $stm = explode(" ", trim($line));
