@@ -8,7 +8,6 @@ import { CodeResultsComponent } from './code-results/code-results.component';
 import { CodeFileTabComponent } from './code-manager/code-file-tab/code-file-tab.component';
 import { CodeFormComponent } from './code-manager/code-form/code-form.component';
 
-import { CodemirrorModule } from 'ng2-codemirror';
 
 @NgModule({
   declarations: [
@@ -20,8 +19,7 @@ import { CodemirrorModule } from 'ng2-codemirror';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
-    CodemirrorModule
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

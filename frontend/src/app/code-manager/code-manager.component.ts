@@ -42,17 +42,52 @@ export class CodeManagerComponent implements OnInit {
     return false;
   }
 
-  sendCode(code: HTMLInputElement): boolean {
+  sendCode(values: {code, rating}): boolean {
 
-    if (!code) {
+    if (!values.code) {
       swal('Empty Code', 'You must enter some text to be scanned', 'error');
       return false;
     }
 
+    var url = "http://localhost:8080/api/submitCode";
 
-    const body = {'text': code};
+    switch(values.rating) {
+      case "Select Analysis System": {
+        console.log("No rating system selected");
+        break;
+      }
+      case "Flesch Kincaid Reading Ease": {
+        url += "?readabilityType=fleschKincaidReadingEase";
+        break;
+      }
+      case "Flesch Kincaid Grade Level": {
+        url += "?readabilityType=fleschKincaidGradeLevel";
+        break;
+      }
+      case "Gunning Fog Score": {
+        url += "?readabilityType=gunningFogIndex";
+        break;
+      }
+      case "Coleman Liau Index": {
+        url += "?readabilityType=colemanLiauIndex";
+        break;
+      }
+      case "SMOG Index" : {
+        url += "?readabilityType=smogIndex";
+        break;
+      }
+      case "Automated Reability Index" : {
+        url += "?readabilityType=automatedReadabilityIndex";
+        break;
+      }
+    }
+
+    console.log(url);
+
+    const body = {'text': values.code};
+    
     console.log(body);
-    this.http.post<Statistics>('http://localhost:8080/api/submitCode', body).subscribe(data => {
+    this.http.post<Statistics>(url, body).subscribe(data => {
       console.log(data);
 
 

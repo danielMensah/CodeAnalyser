@@ -1,6 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-
-import codemirror from 'codemirror';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';``
 
 @Component({
   selector: 'app-code-form',
@@ -12,20 +10,22 @@ import codemirror from 'codemirror';
 export class CodeFormComponent implements OnInit {
 
   @Input() displayValue: string;
-  @Output() onCodeSubmit: EventEmitter<string>;
+  @Output() onCodeSubmit: EventEmitter<{}>;
   
 
   constructor() { 
     //CodeMirror.fromTextArea(document.getElementById("editor"));
-    this.onCodeSubmit = new EventEmitter<string>();
+    this.onCodeSubmit = new EventEmitter<{}>();
   }
 
   ngOnInit() {
 
   }
 
-  submitCode(elem: HTMLInputElement): void {
-    this.onCodeSubmit.emit(elem.value);
+  submitCode(elem: HTMLInputElement, dropdown: HTMLInputElement): void {
+    var rating = dropdown.value;
+    var code = elem.value;
+    this.onCodeSubmit.emit({code, rating});
   }
 
   readFile(input: HTMLInputElement): boolean {    

@@ -23,12 +23,16 @@
     <tr>
       <th>Type</th>
       <th>Line</th>
+      <th>Score</th>
+      <th>Feedback</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let comment of stats.class.comments">
       <td>{{comment.type}}</td>
       <td>{{comment.line}}</td>
+      <td>{{comment.readabilityScore}}</td>
+      <td>{{comment.feedback}}</td>
     </tr>
   </tbody>
 </table>

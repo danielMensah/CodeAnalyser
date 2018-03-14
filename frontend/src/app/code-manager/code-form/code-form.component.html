@@ -2,10 +2,20 @@
   <label>Code</label>
   <textarea #editor id="editor">{{displayValue}}</textarea>
   <input #file (change)="readFile(file)" type="file">
+  <div class="buffer"></div>
+  <select #select>
+    <option>Select Analysis System</option>
+    <option>Flesch Kincaid Reading Ease</option>
+    <option>Flesch Kincaid Grade Level</option>
+    <option>Gunning Fog Score</option>
+    <option>Coleman Liau Index</option>
+    <option>SMOG Index</option>
+    <option>Automated Reability Index</option>
+  </select>
 </div>
-
+<div class="buffer"></div>
 <div class="ui centre">
-  <div (click)="submitCode(editor)" class="ui teal button">
+  <div (click)="submitCode(editor, select)" class="ui teal button">
         <i class="add icon"></i>Submit
   </div>
 </div>
