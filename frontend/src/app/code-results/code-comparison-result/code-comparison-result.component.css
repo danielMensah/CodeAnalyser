@@ -1,0 +1,19 @@
+.result {
+  margin: 50px 0 20px 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.result div {
+  margin-top: 30px;
+}
+
+.comparator {
+  display: flex;
+  margin: 0 auto 0 auto;
+}
+
+.secondary-code {
+  margin-left: 70px;
+}

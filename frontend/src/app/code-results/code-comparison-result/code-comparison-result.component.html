@@ -1,0 +1,40 @@
+<div class="result">
+  <h2>Comparison result</h2>
+  <div class="comparator">
+    <div class="txt-code primary-code">
+      <h3>Primary code</h3>
+      <table class="ui celled structured table">
+        <thead>
+        <tr>
+          <th>Function name</th>
+          <th>CCN</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let function of stats.class.functions">
+          <td>{{function.name}}</td>
+          <td>{{function.complexity}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="txt-code secondary-code" disabled>
+      <h3>Secondary code</h3>
+      <table class="ui celled structured table">
+        <thead>
+        <tr>
+          <th>Function name</th>
+          <th>CCN</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let function of stats.class.functions">
+          <td>{{function.name}}</td>
+          <td>{{function.complexity}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

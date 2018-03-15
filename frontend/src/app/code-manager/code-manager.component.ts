@@ -82,7 +82,7 @@ export class CodeManagerComponent implements OnInit {
         url += "?readabilityType=smogIndex";
         break;
       }
-      case "Automated Reability Index" : {
+      case "Automated Readability Index" : {
         url += "?readabilityType=automatedReadabilityIndex";
         break;
       }

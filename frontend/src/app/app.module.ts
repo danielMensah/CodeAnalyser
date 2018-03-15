@@ -7,6 +7,7 @@ import { CodeManagerComponent } from './code-manager/code-manager.component';
 import { CodeResultsComponent } from './code-results/code-results.component';
 import { CodeFileTabComponent } from './code-manager/code-file-tab/code-file-tab.component';
 import { CodeFormComponent } from './code-manager/code-form/code-form.component';
+import { CodeComparisonResultComponent } from './code-results/code-comparison-result/code-comparison-result.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { CodeFormComponent } from './code-manager/code-form/code-form.component'
     CodeFormComponent,
     CodeResultsComponent,
     CodeFileTabComponent,
-    CodeManagerComponent
+    CodeManagerComponent,
+    CodeComparisonResultComponent
   ],
   imports: [
     BrowserModule,
