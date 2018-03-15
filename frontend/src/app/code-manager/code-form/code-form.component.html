@@ -13,8 +13,11 @@
   </select>
 </div>
 <div class="buffer"></div>
-<div class="ui centre">
+<div *ngIf="!disableButtons" class="ui centre">
   <div (click)="submitCode(editor, select)" class="ui teal button">
         <i class="add icon"></i>Submit
+  </div>
+  <div (click)="compare()" class="ui teal button">
+    <i class="add icon"></i>Compare
   </div>
 </div>

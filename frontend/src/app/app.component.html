@@ -8,10 +8,26 @@
 <div class="ui container">
     <div class="ui two column grid">
         <div class="column">
-            <app-code-manager (onStatsReceived)="setStats($event)"></app-code-manager>
+            <app-code-manager 
+                [disableButtons]="comparing"
+                (onStatsReceived)="setStats($event)"
+                (onCompareClicked)="comparing = !comparing"></app-code-manager>
         </div>
         <div class="column">
-            <app-code-results [stats]="stats"></app-code-results>
+            <app-code-results
+                *ngIf="!comparing" 
+                [stats]="stats"></app-code-results>
+            <app-code-manager 
+                *ngIf="comparing"
+                [disableButtons]="comparing"
+                (onStatsReceived)="setStats($event)"
+                (onCompareClicked)="comparing = !comparing"></app-code-manager>
         </div>
     </div>
+
+    <div *ngIf="comparing" (click)="performComparison()" class="ui teal button">
+        <i class="add icon"></i>Compare files
+    </div>
 </div>
+
+

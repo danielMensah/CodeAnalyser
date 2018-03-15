@@ -5,4 +5,8 @@
 -->
 
    
-<app-code-form [displayValue]="selectedCodeFile.code" (onCodeSubmit)="sendCode($event)"></app-code-form>
+<app-code-form 
+      [displayValue]="selectedCodeFile.code" 
+      [disableButtons]="disableButtons"
+      (onCodeSubmit)="sendCode($event)"
+      (onCompareClicked)="compare($event)"></app-code-form>

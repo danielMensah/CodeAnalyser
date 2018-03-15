@@ -10,6 +10,8 @@ import { Statistics } from './statistics.model';
 export class AppComponent {
   title = 'app';
 
+  comparing = false;
+
   stats: Statistics;
 
   constructor() {
@@ -19,5 +21,10 @@ export class AppComponent {
   setStats(respondsStats: Statistics): void {
     this.stats = respondsStats;
     console.log(respondsStats.class);
+  }
+
+  performComparison(): boolean {
+    console.log("Cool");
+    return false;
   }
 }

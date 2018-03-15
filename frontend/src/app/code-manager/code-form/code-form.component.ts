@@ -9,13 +9,15 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';`
 
 export class CodeFormComponent implements OnInit {
 
+  @Input() disableButtons: boolean;
   @Input() displayValue: string;
   @Output() onCodeSubmit: EventEmitter<{}>;
+  @Output() onCompareClicked: EventEmitter<boolean>;
   
 
   constructor() { 
-    //CodeMirror.fromTextArea(document.getElementById("editor"));
     this.onCodeSubmit = new EventEmitter<{}>();
+    this.onCompareClicked = new EventEmitter<boolean>();
   }
 
   ngOnInit() {
@@ -26,6 +28,11 @@ export class CodeFormComponent implements OnInit {
     var rating = dropdown.value;
     var code = elem.value;
     this.onCodeSubmit.emit({code, rating});
+  }
+
+  compare(): boolean {
+    this.onCompareClicked.emit(true);
+    return false;
   }
 
   readFile(input: HTMLInputElement): boolean {    

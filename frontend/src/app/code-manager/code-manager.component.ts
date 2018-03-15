@@ -2,7 +2,8 @@ import {
   Component,
   OnInit,
   EventEmitter,
-  Output
+  Output,
+  Input
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -18,7 +19,10 @@ import { CodeFile } from '../code-file.model';
 })
 export class CodeManagerComponent implements OnInit {
 
+  @Input() disableButtons: boolean;
+
   @Output() onStatsReceived: EventEmitter<Statistics>;
+  @Output() onCompareClicked: EventEmitter<boolean>;
 
   codeFiles: CodeFile[];
 
@@ -26,6 +30,7 @@ export class CodeManagerComponent implements OnInit {
 
   constructor(private http: HttpClient) {
     this.onStatsReceived = new EventEmitter<Statistics>();
+    this.onCompareClicked = new EventEmitter<boolean>();
 
     this.codeFiles = [];
     this.codeFiles.push(new CodeFile('one.java', 'one'));
@@ -33,6 +38,11 @@ export class CodeManagerComponent implements OnInit {
     this.codeFiles.push(new CodeFile('three.java', 'three'));
 
     this.selectedCodeFile = this.codeFiles[0];
+  }
+
+  compare(): boolean {
+    this.onCompareClicked.emit(true);
+    return false;
   }
 
   ngOnInit() { }
@@ -52,10 +62,6 @@ export class CodeManagerComponent implements OnInit {
     var url = "http://localhost:8080/api/submitCode";
 
     switch(values.rating) {
-      case "Select Comment Analysis Tool": {
-        console.log("No rating system selected");
-        break;
-      }
       case "Flesch Kincaid Reading Ease": {
         url += "?readabilityType=fleschKincaidReadingEase";
         break;
