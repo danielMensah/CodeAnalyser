@@ -25,7 +25,7 @@ class FunctionControllerTest extends PHPUnit_Framework_TestCase {
 
     public function testThatCanGetFunctions() {
         $sample = file(__DIR__ . '/../Helpers/ValidJavaCode.java');
-        $this->model->setComments($this->commentController->getAllComments($sample));
+        $this->model->setComments($this->commentController->getAllComments($sample, 'gunningFogIndex'));
         $dismountedClass = dismount($this->model);
         $this->model->setFunctions($this->controller->getFunctions($sample,
             $dismountedClass['comments'], 'java', $dismountedClass['name']));

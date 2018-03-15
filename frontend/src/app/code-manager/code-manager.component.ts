@@ -52,7 +52,7 @@ export class CodeManagerComponent implements OnInit {
     var url = "http://localhost:8080/api/submitCode";
 
     switch(values.rating) {
-      case "Select Analysis System": {
+      case "Select Comment Analysis Tool": {
         console.log("No rating system selected");
         break;
       }
@@ -85,7 +85,7 @@ export class CodeManagerComponent implements OnInit {
     console.log(url);
 
     const body = {'text': values.code};
-    
+
     console.log(body);
     this.http.post<Statistics>(url, body).subscribe(data => {
       console.log(data);
@@ -105,7 +105,7 @@ export class CodeManagerComponent implements OnInit {
         } else {
           swal('Invalid Code', 'Not recognised as valid Java code', 'error');
         }
-        
+
       });
 
       return false;

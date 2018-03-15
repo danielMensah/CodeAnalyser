@@ -9,7 +9,7 @@
 require_once __DIR__ . "/../Models/CommentModel.php";
 require_once __DIR__ . "/../Models/ClassModel.php";
 require_once __DIR__ . "/../Models/CommentBlock.php";
-require_once __DIR__ . "/FogIndexController.php";
+require_once __DIR__ . "/ReadabilityController.php";
 require_once __DIR__ . "/Abstracts/FeedbackAbstract.php";
 
 class CommentController extends FeedbackAbstract {
@@ -19,6 +19,7 @@ class CommentController extends FeedbackAbstract {
     /**
      * CommentController constructor.
      * @param string $language
+     * @internal param null $readabilityType
      */
     public function __construct(string $language) {
         $this->commentStyles = json_decode(file_get_contents(
@@ -27,43 +28,49 @@ class CommentController extends FeedbackAbstract {
 
     /**
      * @param array $codeAsArray
+     * @param string $readabilityType
      * @return array
-     * @internal param string $language
-     * @internal param bool|null $previousLineIsComment
-     *
      * If block code content needs reviewing, glue code.
      */
-    public function getAllComments($codeAsArray) {
+    public function getAllComments($codeAsArray, $readabilityType) {
         $previousIsInline = false;
         $commentBlock = new CommentBlock();
 
         $listOfComments = array();
         $lineCounter = 1;
         $gluedComment = "";
+        $isBlock = false;
 
         foreach ($codeAsArray as $line) {
+
             if (self::commentIsInline($line)) { //Check inline comments
+                self::sanitizeLine($line, $sanitizedLine);
+
                 array_push($listOfComments,
-                    self::setModel($line,'inline', $lineCounter, $previousIsInline));
+                    self::setModel($sanitizedLine,'inline', $lineCounter, $previousIsInline,0, $readabilityType));
 
                 $previousIsInline = true;
 
             } else if (strpos(trim($line), $this->commentStyles['block']['start']) === 0) { //Check start block comments
+                $isBlock = true;
                 $previousIsInline = false;
                 $commentBlock->setStart($lineCounter);
                 $gluedComment = $gluedComment . $line . "\n";
 
             } else if (contains($line, $this->commentStyles['block']['end'])) { //Check end block comments
-                $gluedComment = $gluedComment . $line;
+                $gluedComment = $gluedComment . $line . "\n";
                 $commentBlock->setEnd($lineCounter);
                 $commentLines = ($lineCounter - $commentBlock->getStart()) + 1;
 
                 array_push($listOfComments,
-                    self::setModel($gluedComment,'block', $commentBlock, false, $commentLines));
+                    self::setModel($gluedComment,'block', $commentBlock, false, $commentLines, $readabilityType));
 
                 $commentBlock = new CommentBlock();
                 $gluedComment = "";
+                $isBlock = false;
 
+            } else if ($isBlock) {
+                $gluedComment = $gluedComment . $line . "\n";
             } else {
                 $previousIsInline = false;
             }
@@ -74,24 +81,32 @@ class CommentController extends FeedbackAbstract {
         return $listOfComments;
     }
 
+    public function sanitizeLine($line, &$sanitizedLine) {
+        $sanitizedLine = contains($line, "//") ? strstr($line, "//") : strstr($line, "/*");
+        return $sanitizedLine;
+    }
+
     /**
      * @param $comment
      * @param $type
      * @param $lineCounter
      * @param $previousIsInline
      * @param int $lines
+     * @param null $readabilityType
      * @return CommentModel CommentModel
      */
-    private function setModel($comment, $type, $lineCounter, $previousIsInline, $lines = 0) {
+    private function setModel($comment, $type, $lineCounter, $previousIsInline, $lines = 0, $readabilityType) {
         $commentModel = new CommentModel();
-        $fogIndex = new FogIndexController();
 
-        $score = $fogIndex->calculateFogIndex($comment);
+        $readabilityController = new ReadabilityController();
+
+        $score = $readabilityController->$readabilityType($comment);
+        $commentModel->setReadabilityScore($score);
+        $scoreComment = $readabilityController->scoreComment($score, $readabilityType);
 
         $commentModel->setType($type);
         $commentModel->setLine($lineCounter);
-        $commentModel->setFogIndex($score);
-        $commentModel->setFeedback($this->getReview($type === 'inline', $previousIsInline, $lines, $score));
+        $commentModel->setFeedback($this->getReview($type === 'inline', $previousIsInline, $lines, $scoreComment));
 
         return $commentModel;
     }
@@ -106,14 +121,14 @@ class CommentController extends FeedbackAbstract {
      * @param bool $isInline
      * @param bool $previousIsInline
      * @param int $blockLines
-     * @param $score
+     * @param $scoreComment
      * @return null|string
      */
-    public function getReview($isInline = true, $previousIsInline = false, $blockLines = 0, $score) {
-        if ($isInline && $previousIsInline) return DOUBLE_INLINE_COMMENTS . " " . self::fogComment($score);
-        if ($isInline) return self::fogComment($score);
+    public function getReview($isInline = true, $previousIsInline = false, $blockLines = 0, $scoreComment) {
+        if ($isInline && $previousIsInline) return DOUBLE_INLINE_COMMENTS . " " . $scoreComment;
+        if ($isInline) return $scoreComment;
 
-        return self::getBlockCommentFeedback($blockLines, 2) . " " . self::fogComment($score);
+        return self::getBlockCommentFeedback($blockLines, 2) . " " . $scoreComment;
     }
 
     /**
@@ -126,11 +141,4 @@ class CommentController extends FeedbackAbstract {
         return null;
     }
 
-    public function fogComment($score) {
-        if ($score < 9) return FOG_INDEX_LEVEL_GRADE;
-        if ($score > 8 && $score < 13) return FOG_INDEX_LEVEL_HIGH_SCHOOL;
-        if ($score > 12 && $score < 15) return FOG_INDEX_LEVEL_COLLEGE_JUNIOR;
-
-        return FOG_INDEX_LEVEL_COLLEGE_GRADUATE;
-    }
 }

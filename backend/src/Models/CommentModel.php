@@ -15,7 +15,7 @@ class CommentModel {
     /** @var string|CommentBlock */
     private $line;
     /** @var float */
-    private $fogIndex;
+    private $readabilityScore;
     /** @var string */
     private $feedback;
 
@@ -64,15 +64,15 @@ class CommentModel {
     /**
      * @return float
      */
-    public function getFogIndex(): float {
-        return $this->fogIndex;
+    public function getReadabilityScore(): float {
+        return $this->readabilityScore;
     }
 
     /**
-     * @param float $fogIndex
+     * @param float $readabilityScore
      */
-    public function setFogIndex(float $fogIndex) {
-        $this->fogIndex = $fogIndex;
+    public function setReadabilityScore(float $readabilityScore) {
+        $this->readabilityScore = $readabilityScore;
     }
 
 }

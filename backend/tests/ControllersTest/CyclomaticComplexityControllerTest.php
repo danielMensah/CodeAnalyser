@@ -28,7 +28,7 @@ class CyclomaticComplexityControllerTest extends PHPUnit_Framework_TestCase {
 
     public function testThatCanGetNumberOfKeywordsEscapingInlineComments() {
         $sample = file(__DIR__ . '/../Helpers/FunctionJavaCodeWithInlineComments.java', FILE_SKIP_EMPTY_LINES | FILE_IGNORE_NEW_LINES);
-        $this->model->setComments($this->commentController->getAllComments($sample));
+        $this->model->setComments($this->commentController->getAllComments($sample, 'gunningFogIndex'));
         $commentArray = dismount($this->model)['comments']; // needed to remove comments
 
         $expectedResult = 12;
@@ -39,7 +39,7 @@ class CyclomaticComplexityControllerTest extends PHPUnit_Framework_TestCase {
 
     public function testThatCanGetCyclomaticComplexityEscapingBlockComments() {
         $sample = file(__DIR__ . '/../Helpers/FunctionJavaCodeWithBlockComments.java', FILE_SKIP_EMPTY_LINES | FILE_IGNORE_NEW_LINES);
-        $this->model->setComments($this->commentController->getAllComments($sample));
+        $this->model->setComments($this->commentController->getAllComments($sample, 'gunningFogIndex'));
         $commentArray = dismount($this->model)['comments']; // needed to remove comments
 
         $expectedResult = 8;

@@ -137,3 +137,13 @@ function returnFoundKeyword($line, $keywords, string &$match = null) {
 
     return $match;
 }
+
+/**
+ * @param $a
+ * @param $b
+ * @param $subject
+ * @return bool
+ */
+function between($a, $b, $subject) {
+    return $subject >= $a && $subject <= $b;
+}

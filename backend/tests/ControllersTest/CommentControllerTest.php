@@ -23,22 +23,10 @@ class CommentControllerTest extends PHPUnit_Framework_TestCase {
 
     public function testThatCanGetComments() {
         $sample = file(__DIR__ . '/../Helpers/ValidJavaCode.java');
-        $this->class->setComments($this->controller->getAllComments($sample));
+        $this->class->setComments($this->controller->getAllComments($sample, 'fleschKincaidReadingEase'));
 
         $expectedResult = 9;
         $actualResult = sizeof($this->class->getComments());
-
-        self::assertEquals($expectedResult, $actualResult);
-    }
-
-    public function testThatCanReviewComments() {
-        $sample = file(__DIR__ . '/../Helpers/ValidJavaCodeBlockComment.java');
-        $this->class->setComments($this->controller->getAllComments($sample));
-
-        $jsonResponse = file_get_contents(__DIR__ . '/../Helpers/CommentResponse.json');
-
-        $expectedResult = trim(preg_replace('/\s\s+/', '', $jsonResponse));
-        $actualResult = json_encode(dismount($this->class)['comments']);
 
         self::assertEquals($expectedResult, $actualResult);
     }

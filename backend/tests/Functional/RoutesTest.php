@@ -40,7 +40,11 @@ class RoutesTest extends BaseTestCase {
         $needle = "\"valid\":true";
 
         //Empty code
-        $response = $this->runApp('POST', '/api/submitCode', array("text" => json_encode($sample)));
+        $response = $this->runApp('POST', '/api/submitCode?readabilityType=gunningFogIndex',
+            array(
+                "text" => json_encode($sample),
+            ));
+
         self::assertEquals(200, (int)$response->getStatusCode());
         self::assertContains($needle, (string)$response->getBody());
     }

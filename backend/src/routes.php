@@ -23,9 +23,10 @@ $app->post('/api/submitCode', function (Request $request, Response $response) {
     }
 
     $codeAsArray = explode("\n", $request->getParsedBody()['text']);
+    $readabilityType = $request->getQueryParams()['readabilityType'];
 
     $controller = new EntryController('java');
-    $response->getBody()->write($controller->codeReview($codeAsArray));
+    $response->getBody()->write($controller->codeReview($codeAsArray, $readabilityType));
 
     return $response;
 });

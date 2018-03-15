@@ -27,7 +27,7 @@ class EntryController {
         $this->language = $language;
     }
 
-    public function codeReview($codeAsArray) {
+    public function codeReview($codeAsArray, $readabilityType = 'gunningFogIndex') {
         $validator = new CodeValidatorController();
         $response = new ResponseModel();
 
@@ -35,7 +35,7 @@ class EntryController {
             $classModel = new ClassModel();
 
             $commentController = new CommentController($this->language);
-            $classModel->setComments($commentController->getAllComments($codeAsArray));
+            $classModel->setComments($commentController->getAllComments($codeAsArray, $readabilityType));
             $commentArray = dismount($classModel)['comments'];
 
             $className = self::getClassName(removeComments($codeAsArray, $commentArray));
