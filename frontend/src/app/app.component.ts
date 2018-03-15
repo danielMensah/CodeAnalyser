@@ -16,7 +16,7 @@ export class AppComponent {
 
   constructor() {
     this.stats = new Statistics();
-   }
+  }
 
   setStats(respondsStats: Statistics): void {
     this.stats = respondsStats;
@@ -25,6 +25,11 @@ export class AppComponent {
 
   performComparison(): boolean {
     console.log("Cool");
+    return false;
+  }
+
+  back(): boolean {
+    this.comparing = false;
     return false;
   }
 }

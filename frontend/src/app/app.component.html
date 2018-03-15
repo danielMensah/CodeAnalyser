@@ -25,11 +25,21 @@
         </div>
     </div>
 
-    <div *ngIf="comparing" (click)="performComparison()" class="ui teal button">
-        <i class="add icon"></i>Compare files
+    <div *ngIf="comparing" class="ui buttonGroup buttons">
+        <button (click)="back()" class="ui button">Back</button>
+        <div class="or" data-text="or"></div>
+        <button (click)="performComparison()" class="ui positive button">Compare</button>
     </div>
 
-  <app-code-comparison-result [stats]="stats"></app-code-comparison-result>
+    <!--<div *ngIf="comparing" (click)="back()" class="ui teal button ">-->
+        <!--<i class="arrow left icon"></i>Back-->
+    <!--</div>-->
+
+    <!--<div *ngIf="comparing" (click)="performComparison()" class="ui teal button">-->
+        <!--<i class="add icon"></i>Compare files-->
+    <!--</div>-->
+
+  <app-code-comparison-result *ngIf="comparing" [stats]="stats"></app-code-comparison-result>
 </div>
 
 

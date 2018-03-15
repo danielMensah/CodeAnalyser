@@ -3,6 +3,7 @@
   <textarea #editor id="editor">{{displayValue}}</textarea>
   <input #file (change)="readFile(file)" type="file">
   <div class="buffer"></div>
+  <label>Select Comment Evaluation Tool</label>
   <select #select>
     <option>Gunning Fog Score</option>
     <option>Flesch Kincaid Reading Ease</option>
@@ -13,11 +14,18 @@
   </select>
 </div>
 <div class="buffer"></div>
-<div *ngIf="!disableButtons" class="ui centre">
-  <div (click)="submitCode(editor, select)" class="ui teal button">
-        <i class="add icon"></i>Submit
-  </div>
-  <div (click)="compare()" class="ui teal button">
-    <i class="add icon"></i>Compare
-  </div>
+
+<div *ngIf="!disableButtons" class="ui buttonGroup buttons">
+  <button (click)="submitCode(editor, select)" class="ui button">Submit code</button>
+  <div class="or" data-text="or"></div>
+  <button (click)="compare()" class="ui positive button">Compare with other</button>
 </div>
+
+<!--<div *ngIf="!disableButtons" class="ui centre">-->
+  <!--<div (click)="submitCode(editor, select)" class="ui teal button">-->
+        <!--<i class="add icon"></i>Submit-->
+  <!--</div>-->
+  <!--<div (click)="compare()" class="ui teal button">-->
+    <!--<i class="add icon"></i>Compare-->
+  <!--</div>-->
+<!--</div>-->
