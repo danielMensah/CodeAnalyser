@@ -30,7 +30,8 @@
   <tbody>
     <tr *ngFor="let comment of stats.class.comments">
       <td>{{comment.type}}</td>
-      <td>{{comment.line}}</td>
+      <td *ngIf="!comment.line.start">{{comment.line}}</td>
+      <td *ngIf="comment.line.start">{{comment.line.start}} - {{comment.line.end}}</td>
       <td>{{comment.readabilityScore}}</td>
       <td>{{comment.feedback}}</td>
     </tr>
