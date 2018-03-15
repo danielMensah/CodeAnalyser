@@ -44,7 +44,7 @@ class CodeValidatorController {
      * @return bool
      */
     private function checkIfLineContainsUnsupportedSyntax($line) {
-        return contains($line, 'var') || (contains($line, '$') && strpos(trim($line), '$') == 0);
+        return contains($line, 'var ') || (contains($line, '$') && strpos(trim($line), '$') == 0);
     }
 
 }

@@ -1,6 +1,7 @@
 .ui.form textarea {
     margin:1em 0em;
     height:700px;
+    font-size:17px;
 }
 
 .buffer {
