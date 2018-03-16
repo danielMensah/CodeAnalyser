@@ -137,6 +137,7 @@ class FunctionController extends FeedbackAbstract {
     protected function getBlockCommentFeedback($cc, $type = null) {
         if ($cc > 50) return FUNCTION_FEEDBACK_ABOVE_50;
         if ($cc > 20 && $cc < 50) return FUNCTION_FEEDBACK_ABOVE_20;
-        return "";
+        if ($cc > 10 && $cc < 20) return FUNCTION_FEEDBACK_ABOVE_10;
+        return FUNCTION_FEEDBACK_BELOW_10;
     }
 }
